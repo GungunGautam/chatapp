@@ -26,18 +26,18 @@ export const signup = async(req,res) =>{
             password:hashedPassword,
             gender,
             profilepic: gender ==="male" ? boyProfilePic : girlProfilePic
-        })
+        });
 
         if(newUser){
         //Generate jwt token
         generateTokenAndSetCookie(newUser._id,res);
         
             await newUser.save();
-            res.status(201).json({
+             res.status(201).json({
                 _id : newUser._id,
                 fullname:newUser.fullname,
                 username: newUser.username,
-                profilepic: newUser.profilepic
+                profilepic: newUser.profilepic,
             });
         }else{
             res.status(400).json({error:"invalid user data"});
@@ -47,7 +47,7 @@ export const signup = async(req,res) =>{
         console.log("error in signup controller",error.message);
         res.status(500).json({error:"Internal server error"});
     }
-}
+};
 
 export const login = async(req,res) =>{
     try{
